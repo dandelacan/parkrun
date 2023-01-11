@@ -40,6 +40,7 @@ func main() {
 		panic(err)
 	}
 	defer us.Close()
+	fmt.Println("conected to db")
 	us.AutoMigrate()
 
 	usersController := controllers.NewUsers(us)

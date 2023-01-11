@@ -22,6 +22,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("ecp connected to db")
 	defer us.Close()
 
 	dan := models.User{
