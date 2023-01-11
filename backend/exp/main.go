@@ -6,11 +6,11 @@ import (
 )
 
 const (
-	host     = "localhost"
+	host     = "parkrundb.c5bt6dubggbv.eu-west-2.rds.amazonaws.com"
 	port     = 5432
 	user     = "postgres"
-	password = "gheyghey"
-	dbname   = "parkrun"
+	password = "postgres"
+	dbname   = "postgres"
 )
 
 func main() {

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 
@@ -22,6 +24,7 @@ func NewUserService(conectionInfo string) (*UserService, error) {
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("Connected to the Database")
 	db.LogMode(true)
 	return &UserService{db: db}, nil
 }
