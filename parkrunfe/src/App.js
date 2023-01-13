@@ -14,6 +14,7 @@ class App extends React.Component {
     this.state = {
       decodedResults: []
     }
+    this.childRef = React.createRef()
    
     // This binding is necessary to make `this` work in the callback.
     this.onNewScanResult = this.onNewScanResult.bind(this);
@@ -35,23 +36,33 @@ class App extends React.Component {
             disableFlip={false}
             qrCodeSuccessCallback={this.onNewScanResult}/>
           <ResultContainerPlugin results={this.state.decodedResults} />
-          <Timer  />
+          <Timer ref={this.childRef} />
+          <button onClick={this.addManually}>test</button>
         </section>
       </div>
     );
   }
 
   onNewScanResult(decodedText, decodedResult) {
-   
+    const childElement = this.childRef.current
     console.log(
-      "App [result]", decodedResult);
-
+      "App [result]", decodedResult, childElement.state.timeElapsed);
+      
     // let decodedResults = this.state.decodedResults;
     // decodedResults.push(decodedResult);
     this.setState((state, props) => {
-      state.decodedResults.push(decodedResult);
+      
+      state.decodedResults.push({decodedResult: decodedResult, time: childElement.state.timeElapsed});
       return state;
     });
+  }
+
+  addManually(){
+    const childElement = this.childRef.current
+    const time = childElement.state.timeElapsed
+    this.setState((state, props)=>{
+      state.decodedResults.push({decodedResult:{decodedText:"test"}, time:time})
+    })
   }
 
 

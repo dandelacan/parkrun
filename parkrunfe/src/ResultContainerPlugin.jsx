@@ -1,4 +1,5 @@
 import React from 'react';
+var TimeFormat = require('hh-mm-ss')
 
 function filterResults(results) {
     let filteredResults = [];
@@ -8,11 +9,16 @@ function filterResults(results) {
             continue;
         }
 
-        if (results[i].decodedText !== results[i-1].decodedText) {
+        if (results[i].decodedResult.decodedText !== results[i-1].decodedResult.decodedText) {
             filteredResults.push(results[i]);
         }
     }
     return filteredResults;
+}
+
+function formatTime(time){
+    return time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds()
+
 }
 
 class ResultContainerTable extends React.Component {
@@ -23,8 +29,8 @@ class ResultContainerTable extends React.Component {
                 <thead>
                     <tr>
                         <td>#</td>
-                        <td>Decoded Text</td>
-                        <td>Format</td>
+                        <td>Barcode ID    </td>
+                        <td>Time</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,8 +39,8 @@ class ResultContainerTable extends React.Component {
                             console.log(result);
                             return (<tr key={i}>
                                 <td>{i}</td>
-                                <td>{result.decodedText}</td>
-                                <td>{result.result.format.formatName}</td>
+                                <td>{result.decodedResult.decodedText}</td>
+                                <td>{TimeFormat.fromMs(result.time)}</td>
                             </tr>);
                         })
                     }
