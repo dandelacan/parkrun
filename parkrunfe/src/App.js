@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import Html5QrcodePlugin from './Html5QrcodePlugin.jsx'
 import ResultContainerPlugin from './ResultContainerPlugin.jsx'
 import HowToUse from './HowToUse.jsx'
-import { Timer } from './timer';
+import Timer from './Timer';
 
 class App extends React.Component {
 
