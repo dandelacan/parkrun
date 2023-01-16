@@ -19,8 +19,8 @@ type TimeRecords struct {
 }
 
 type TimeRecord struct {
-	Time      uint `json:",string"`
-	BarcodeID uint `json:",string"`
+	Time      string
+	BarcodeID string
 }
 
 func (t *TimeRecords) ViewTimes(w http.ResponseWriter, r *http.Request) {
@@ -60,17 +60,18 @@ func (t *TimeRecords) AddTimes(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(TimeRecords)
 
 	for _, tr := range TimeRecords {
+		bcid, _ := strconv.ParseUint(tr.BarcodeID, 10, 32)
+		tr, _ := strconv.ParseUint(tr.Time, 10, 32)
 		timeRecord := models.TimeRecord{
-			BarcodeID: tr.BarcodeID,
-			Time:      tr.Time,
+			BarcodeID: uint(bcid),
+			Time:      uint(tr),
 		}
 		err = t.trs.Create(&timeRecord)
-		if err != nil {
-			fmt.Println("Time Not added: ", strconv.FormatInt(int64(tr.BarcodeID), 10))
-		}
 
 	}
 	if err == nil {
 		fmt.Fprint(w, "all times uploaded succsessfully")
+	} else {
+		fmt.Fprint(w, "unsuccsessful please try again")
 	}
 }
