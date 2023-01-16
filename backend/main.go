@@ -60,25 +60,6 @@ func main() {
 		handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"}),
 	)
 
-	func corsMiddleware(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Executing middleware", r.Method)
-	   
-	   
-		if r.Method == "OPTIONS" {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers:", "Origin, Content-Type, X-Auth-Token, Authorization")
-		w.Header().Set("Content-Type", "application/json")
-		return
-		}
-	   
-	   
-		next.ServeHTTP(w, r)
-		log.Println("Executing middleware again")
-		})
-	   }
-
 	r := mux.NewRouter()
 	r.Use(cors)
 	r.Use()
@@ -87,4 +68,20 @@ func main() {
 	r.HandleFunc("/times", timeRecordController.AddTimes).Methods("POST")
 
 	http.ListenAndServe(":3000", corsMiddleware(r))
+}
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Executing middleware", r.Method)
+
+		if r.Method == "OPTIONS" {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers:", "Origin, Content-Type, X-Auth-Token, Authorization")
+			w.Header().Set("Content-Type", "application/json")
+			return
+		}
+
+		next.ServeHTTP(w, r)
+		fmt.Println("Executing middleware again")
+	})
 }
