@@ -54,18 +54,17 @@ func main() {
 	timeRecordController := controllers.NewTimesService(trs)
 
 	cors := handlers.CORS(
-		handlers.AllowedHeaders([]string{"content-type"}),
+		handlers.AllowedHeaders([]string{"Origin", "Content-type"}),
 		handlers.AllowedOrigins([]string{"*"}),
 		handlers.AllowCredentials(),
 		handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"}),
 	)
 
 	r := mux.NewRouter()
-
+	r.Use(cors)
 	r.HandleFunc("/users", usersController.ViewUsers)
 	r.HandleFunc("/times", timeRecordController.ViewTimes).Methods("GET")
 	r.HandleFunc("/times", timeRecordController.AddTimes).Methods("POST")
 
-	r.Use(cors)
 	http.ListenAndServe(":3000", r)
 }
