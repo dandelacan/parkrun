@@ -7,6 +7,7 @@ import (
 	"parkrun/backend/controllers"
 	"parkrun/backend/models"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -52,10 +53,18 @@ func main() {
 	usersController := controllers.NewUsers(us)
 	timeRecordController := controllers.NewTimesService(trs)
 
+	cors := handlers.CORS(
+		handlers.AllowedHeaders([]string{"content-type"}),
+		handlers.AllowedOrigins([]string{"*"}),
+		handlers.AllowCredentials(),
+	)
+
 	r := mux.NewRouter()
 
 	r.HandleFunc("/users", usersController.ViewUsers)
 	r.HandleFunc("/times", timeRecordController.ViewTimes).Methods("GET")
 	r.HandleFunc("/times", timeRecordController.AddTimes).Methods("POST")
+
+	r.Use(cors)
 	http.ListenAndServe(":3000", r)
 }
