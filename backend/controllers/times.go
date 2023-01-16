@@ -19,8 +19,8 @@ type TimeRecords struct {
 }
 
 type TimeRecord struct {
-	Time      uint
-	BarcodeID uint
+	Time      uint `json:",string"`
+	BarcodeID uint `json:",string"`
 }
 
 func (t *TimeRecords) ViewTimes(w http.ResponseWriter, r *http.Request) {
@@ -68,8 +68,9 @@ func (t *TimeRecords) AddTimes(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println("Time Not added: ", strconv.FormatInt(int64(tr.BarcodeID), 10))
 		}
-		fmt.Fprint(w, "all times uploaded succsessfully")
 
 	}
-
+	if err == nil {
+		fmt.Fprint(w, "all times uploaded succsessfully")
+	}
 }
