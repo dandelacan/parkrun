@@ -7,8 +7,8 @@ import (
 	"parkrun/backend/controllers"
 	"parkrun/backend/models"
 
-	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 const (
@@ -53,35 +53,13 @@ func main() {
 	usersController := controllers.NewUsers(us)
 	timeRecordController := controllers.NewTimesService(trs)
 
-	cors := handlers.CORS(
-		handlers.AllowedHeaders([]string{"Origin", "Content-type"}),
-		handlers.AllowedOrigins([]string{"*"}),
-		handlers.AllowCredentials(),
-		handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"}),
-	)
+	mux := mux.NewRouter()
 
-	r := mux.NewRouter()
-	r.Use(cors)
-	r.Use()
-	r.HandleFunc("/users", usersController.ViewUsers)
-	r.HandleFunc("/times", timeRecordController.ViewTimes).Methods("GET")
-	r.HandleFunc("/times", timeRecordController.AddTimes).Methods("POST")
+	mux.HandleFunc("/users", usersController.ViewUsers)
+	mux.HandleFunc("/times", timeRecordController.ViewTimes).Methods("GET")
+	mux.HandleFunc("/times", timeRecordController.AddTimes).Methods("POST")
+	mux.HandleFunc("/", timeRecordController.AddTimes)
 
-	http.ListenAndServe(":3000", corsMiddleware(r))
-}
-func corsMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Executing middleware", r.Method)
-
-		if r.Method == "OPTIONS" {
-			w.Header().Set("Access-Control-Allow-Origin", "*")
-			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
-			w.Header().Set("Access-Control-Allow-Headers:", "Origin, Content-Type, X-Auth-Token, Authorization")
-			w.Header().Set("Content-Type", "application/json")
-			return
-		}
-
-		next.ServeHTTP(w, r)
-		fmt.Println("Executing middleware again")
-	})
+	handler := cors.Default().Handler(mux)
+	http.ListenAndServe(":3000", handler)
 }

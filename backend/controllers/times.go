@@ -48,12 +48,8 @@ func (t *TimeRecords) ViewTimes(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, message)
 }
 
-func enableCors(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-}
-
 func (t *TimeRecords) AddTimes(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
+
 	var TimeRecords []TimeRecord
 	err := json.NewDecoder(r.Body).Decode(&TimeRecords)
 	if err != nil {
