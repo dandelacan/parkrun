@@ -25,7 +25,7 @@ func (u *Users) ViewUsers(w http.ResponseWriter, r *http.Request) {
 	message := ""
 
 	for _, v := range users {
-		fmt.Printf("%T\n", v.BarcodeID)
+
 		message = message + v.Name + "  " + strconv.FormatInt(int64(v.BarcodeID), 10) + "\n"
 	}
 	fmt.Fprint(w, message)

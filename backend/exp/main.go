@@ -18,24 +18,24 @@ func main() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
-	us, err := models.NewUserService(psqlInfo)
+	us, err := models.NewTimesService(psqlInfo)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("ecp connected to db")
 	defer us.Close()
 
-	dan := models.User{
-		Name:      "dan",
+	dan := models.TimeRecord{
+		Time:      30000,
 		BarcodeID: 33,
 	}
-	val := models.User{
-		Name:      "val",
+	val := models.TimeRecord{
+		Time:      20000,
 		BarcodeID: 43,
 	}
-	bob := models.User{
-		BarcodeID: 53,
-		Name:      "bob",
+	bob := models.TimeRecord{
+		Time:      25000,
+		BarcodeID: 25,
 	}
 	us.DestructiveReset()
 	us.Create(&dan)

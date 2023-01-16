@@ -40,13 +40,22 @@ func main() {
 		panic(err)
 	}
 	defer us.Close()
+
+	trs, err := models.NewTimesService(psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+	defer trs.Close()
 	fmt.Println("conected to db")
 	us.AutoMigrate()
 
 	usersController := controllers.NewUsers(us)
+	timeRecordController := controllers.NewTimesService(trs)
 
 	r := mux.NewRouter()
 
 	r.HandleFunc("/users", usersController.ViewUsers)
+	r.HandleFunc("/times", timeRecordController.ViewTimes).Methods("GET")
+	r.HandleFunc("/times", timeRecordController.AddTimes).Methods("POST")
 	http.ListenAndServe(":3000", r)
 }
