@@ -12,8 +12,8 @@ import (
 
 type TimeRecord struct {
 	gorm.Model
-	BarcodeID uint `json:"BarcodeID,string"`
-	Time      uint `json:"Time,string"`
+	BarcodeID int64 `json:"BarcodeID,string"`
+	Time      uint  `json:"Time,string"`
 }
 
 type TimeRecordService struct {

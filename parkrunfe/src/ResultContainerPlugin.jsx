@@ -1,4 +1,7 @@
+import './App.css';
 import React from 'react';
+import submitTimes from './httpFunction';
+
 var TimeFormat = require('hh-mm-ss')
 
 function filterResults(results) {
@@ -16,16 +19,13 @@ function filterResults(results) {
     return filteredResults;
 }
 
-function formatTime(time){
-    return time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds()
-
-}
 
 class ResultContainerTable extends React.Component {
     render() {
         var results = filterResults(this.props.data);
         return (
-            <table className={'Qrcode-result-table'}>
+            <div>
+                 <table className={'Qrcode-result-table'}>
                 <thead>
                     <tr>
                         <td>#</td>
@@ -40,12 +40,15 @@ class ResultContainerTable extends React.Component {
                             return (<tr key={i}>
                                 <td>{i}</td>
                                 <td>{result.decodedResult.decodedText}</td>
-                                <td>{TimeFormat.fromMs(result.time)}</td>
+                                <td>{TimeFormat.fromMs(result.time, 'hh:mm:ss')}</td>
                             </tr>);
                         })
                     }
                 </tbody>
             </table>
+           
+            </div>
+           
         );
     }
 }
@@ -57,6 +60,7 @@ class ResultContainerPlugin extends React.Component {
                 <div className='Result-header'>Scanned results ({results.length})</div>
                 <div className='Result-section'>
                     <ResultContainerTable data={this.props.results} />
+                    <button id='upload-button' onClick={()=>submitTimes(results)}>Upload times</button>
                 </div>
             </div>);
     }

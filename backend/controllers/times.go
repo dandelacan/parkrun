@@ -63,7 +63,7 @@ func (t *TimeRecords) AddTimes(w http.ResponseWriter, r *http.Request) {
 		bcid, _ := strconv.ParseUint(tr.BarcodeID, 10, 32)
 		tr, _ := strconv.ParseUint(tr.Time, 10, 32)
 		timeRecord := models.TimeRecord{
-			BarcodeID: uint(bcid),
+			BarcodeID: int64(bcid),
 			Time:      uint(tr),
 		}
 		err = t.trs.Create(&timeRecord)

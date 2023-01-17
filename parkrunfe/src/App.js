@@ -3,8 +3,8 @@ import './App.css';
 import React, { useRef } from 'react';
 import Html5QrcodePlugin from './Html5QrcodePlugin.jsx'
 import ResultContainerPlugin from './ResultContainerPlugin.jsx'
-import HowToUse from './HowToUse.jsx'
 import Timer from './Timer';
+
 
 class App extends React.Component {
 
@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      decodedResults: []
+      decodedResults: [{decodedResult:{decodedText:"12634"}, time:100000}, {decodedResult:{decodedText:"56878"}, time:300000}]
     }
     this.childRef = React.createRef()
    
@@ -35,9 +35,10 @@ class App extends React.Component {
             qrbox={250}
             disableFlip={false}
             qrCodeSuccessCallback={this.onNewScanResult}/>
+            <Timer ref={this.childRef} />
           <ResultContainerPlugin results={this.state.decodedResults} />
-          <Timer ref={this.childRef} />
           <button onClick={this.addManually}>test</button>
+      
         </section>
       </div>
     );
