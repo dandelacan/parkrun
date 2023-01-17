@@ -27,6 +27,7 @@ class Timer extends React.Component{
 
     render(){
         return (
+          <div>
             <div className="timer">
                 {Object.entries({
                     
@@ -41,9 +42,8 @@ class Timer extends React.Component{
                         </div>
                     </div>
                 ))}
-                 <div>
-                    <button onClick={this.handleStartClick}>Start Timer</button>
-                    </div>
+            </div>
+            <button onClick={this.handleStartClick}>Start Timer</button>
             </div>
         );
     }

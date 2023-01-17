@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import Html5QrcodePlugin from './Html5QrcodePlugin.jsx'
 import ResultContainerPlugin from './ResultContainerPlugin.jsx'
 import Timer from './Timer';
+import GetByDate from './GetByDate';
 
 
 class App extends React.Component {
@@ -18,7 +19,7 @@ class App extends React.Component {
    
     // This binding is necessary to make `this` work in the callback.
     this.onNewScanResult = this.onNewScanResult.bind(this);
-    
+    this.clearTimes =this.clearTimes.bind(this)
   }
 
 
@@ -36,9 +37,8 @@ class App extends React.Component {
             disableFlip={false}
             qrCodeSuccessCallback={this.onNewScanResult}/>
             <Timer ref={this.childRef} />
-          <ResultContainerPlugin results={this.state.decodedResults} />
-          <button onClick={this.addManually}>test</button>
-      
+          <ResultContainerPlugin results={this.state.decodedResults} clearTimes={this.clearTimes}/>
+          <GetByDate/>
         </section>
       </div>
     );
@@ -58,17 +58,12 @@ class App extends React.Component {
     });
   }
 
-  addManually(){
-    const childElement = this.childRef.current
-    const time = childElement.state.timeElapsed
-    this.setState((state, props)=>{
-      state.decodedResults.push({decodedResult:{decodedText:"test"}, time:time})
-    })
+
+  clearTimes(){
+    console.log("called clear times")
+    this.setState({decodedResults:[]})
   }
-
-
-
-  
+ 
 }
 
 export default App;

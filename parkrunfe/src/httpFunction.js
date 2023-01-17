@@ -16,6 +16,7 @@ async function submitTimes(results){
       };
 
     const response = await axios(config)
+    return response.status
 }
 
 export default submitTimes

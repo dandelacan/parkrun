@@ -21,6 +21,8 @@ function filterResults(results) {
 
 
 class ResultContainerTable extends React.Component {
+    
+
     render() {
         var results = filterResults(this.props.data);
         return (
@@ -54,13 +56,31 @@ class ResultContainerTable extends React.Component {
 }
 
 class ResultContainerPlugin extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          statusMessage: ""
+        }  
+      }
+    clearTimes = this.props.clearTimes  
+    async onSubmiit (results){
+        const  status = await submitTimes(results)
+        console.log(status)
+        
+        if (status == 200){
+            this.setState({statusMessage:"sucsessfully uploaded"})
+            this.clearTimes()
+        }
+    }
+    
     render() { 
         let results = filterResults(this.props.results);
         return (<div className='Result-container'>
                 <div className='Result-header'>Scanned results ({results.length})</div>
                 <div className='Result-section'>
                     <ResultContainerTable data={this.props.results} />
-                    <button id='upload-button' onClick={()=>submitTimes(results)}>Upload times</button>
+                    <button id='upload-button' onClick={()=>this.onSubmiit(results)}>Upload times</button>
+                    <p>{this.state.statusMessage}</p>
                 </div>
             </div>);
     }

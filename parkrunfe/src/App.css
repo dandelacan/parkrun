@@ -103,6 +103,10 @@ body {
   font-size: 14px
 }
 
+.float-left{
+  float: left;
+}
+
 #upload-button{
   align-self: start;
   margin-left: 0;
