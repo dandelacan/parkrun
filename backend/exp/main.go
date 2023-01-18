@@ -25,20 +25,24 @@ func main() {
 	fmt.Println("ecp connected to db")
 	defer us.Close()
 
-	dan := models.TimeRecord{
-		Time:      30000,
-		BarcodeID: 33,
-	}
-	val := models.TimeRecord{
-		Time:      20000,
-		BarcodeID: 43,
-	}
-	bob := models.TimeRecord{
-		Time:      25000,
-		BarcodeID: 25,
-	}
-	us.DestructiveReset()
-	us.Create(&dan)
-	us.Create(&val)
-	us.Create(&bob)
+	// dan := models.TimeRecord{
+	// 	Time:      30000,
+	// 	BarcodeID: 33,
+	// }
+	// val := models.TimeRecord{
+	// 	Time:      20000,
+	// 	BarcodeID: 43,
+	// }
+	// bob := models.TimeRecord{
+	// 	Time:      25000,
+	// 	BarcodeID: 25,
+	// }
+	//us.DestructiveReset()
+
+	// tr, _:= us.AllTimeRecords()
+
+	// var TR = controllers.TimeRecords{}
+	// us.Create(&dan)
+	// us.Create(&val)
+	// us.Create(&bob)
 }

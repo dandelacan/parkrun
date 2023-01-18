@@ -36,11 +36,11 @@ func main() {
 
 	fmt.Println("main")
 
-	us, err := models.NewUserService(psqlInfo)
-	if err != nil {
-		panic(err)
-	}
-	defer us.Close()
+	// us, err := models.NewUserService(psqlInfo)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer us.Close()
 
 	trs, err := models.NewTimesService(psqlInfo)
 	if err != nil {
@@ -48,14 +48,14 @@ func main() {
 	}
 	defer trs.Close()
 	fmt.Println("conected to db")
-	us.AutoMigrate()
+	// us.AutoMigrate()
 
-	usersController := controllers.NewUsers(us)
+	// usersController := controllers.NewUsers(us)
 	timeRecordController := controllers.NewTimesService(trs)
 
 	mux := mux.NewRouter()
 
-	mux.HandleFunc("/users", usersController.ViewUsers)
+	// mux.HandleFunc("/users", usersController.ViewUsers)
 	mux.HandleFunc("/times", timeRecordController.ViewTimes).Methods("GET")
 	mux.HandleFunc("/times", timeRecordController.AddTimes).Methods("POST")
 	mux.HandleFunc("/", timeRecordController.AddTimes)

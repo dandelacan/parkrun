@@ -70,6 +70,8 @@ class ResultContainerPlugin extends React.Component {
         if (status == 200){
             this.setState({statusMessage:"sucsessfully uploaded"})
             this.clearTimes()
+        }else{
+            this.setState({statusMessage:"Upload unsucsessfull please try again"})
         }
     }
     
@@ -80,7 +82,7 @@ class ResultContainerPlugin extends React.Component {
                 <div className='Result-section'>
                     <ResultContainerTable data={this.props.results} />
                     <button id='upload-button' onClick={()=>this.onSubmiit(results)}>Upload times</button>
-                    <p>{this.state.statusMessage}</p>
+                    <p className='float-left'>{this.state.statusMessage}</p>
                 </div>
             </div>);
     }

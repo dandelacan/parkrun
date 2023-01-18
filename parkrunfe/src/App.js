@@ -63,6 +63,8 @@ class App extends React.Component {
     console.log("called clear times")
     this.setState({decodedResults:[]})
   }
+
+
  
 }
 
