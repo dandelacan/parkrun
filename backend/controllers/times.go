@@ -37,15 +37,26 @@ func (t *TimeRecords) ViewTimes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
+		fmt.Fprint(w, err)
 		panic(err)
 	}
+	var message string
+	if len(times) > 1 {
+		message = printTimes(times)
+	}else{
+		message = "no results found for this date"
+	}
+	
+	fmt.Fprint(w, message)
+}
+
+func printTimes(times []models.TimeRecord) string {
 	message := ""
 
 	for _, v := range times {
-		fmt.Printf("%T\n", v.BarcodeID)
-		message = message + strconv.FormatInt(int64(v.BarcodeID), 10) + "  " + strconv.FormatInt(int64(v.Time), 10) + "\n"
+		message = message + strconv.FormatInt(int64(v.BarcodeID), 10) + "\t  " + strconv.FormatInt(int64(v.Time), 10) + "\n"
 	}
-	fmt.Fprint(w, message)
+	return message
 }
 
 func (t *TimeRecords) AddTimes(w http.ResponseWriter, r *http.Request) {
