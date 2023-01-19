@@ -61,5 +61,5 @@ func main() {
 	mux.HandleFunc("/", timeRecordController.AddTimes)
 
 	handler := cors.Default().Handler(mux)
-	http.ListenAndServe(":3000", handler)
+	http.ListenAndServeTLS(":3000","parkrun.crt","parkrun.key", handler)
 }
