@@ -21,7 +21,7 @@ class GetByDate extends React.Component {
   };
 
   render() {
-    const path = `https://ec2-13-41-189-141.eu-west-2.compute.amazonaws.com:3000/times?date=`;
+    const path = `https://harkinpark.run?date=`;
     return (
       <div>
         <label for="date">Select date:</label>

@@ -11,7 +11,7 @@ async function submitTimes(results) {
 
   var config = {
     method: "post",
-    url: "https://ec2-13-41-189-141.eu-west-2.compute.amazonaws.com:3000/times",
+    url: "https://harkinpark.run",
     headers: {
       "Content-Type": "application/json",
     },
