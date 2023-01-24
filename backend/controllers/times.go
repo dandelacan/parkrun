@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"parkrun/backend/models"
 	"strconv"
+	"time"
 )
 
 func NewTimesService(trs *models.TimeRecordService) *TimeRecords {
@@ -53,8 +54,10 @@ func (t *TimeRecords) ViewTimes(w http.ResponseWriter, r *http.Request) {
 func printTimes(times []models.TimeRecord) string {
 	message := ""
 
-	for _, v := range times {	
-		message = message + strconv.FormatInt(int64(v.BarcodeID), 10) + "\t  " + strconv.FormatInt(int64(v.Time), 10) + "\n"
+	for _, v := range times {
+		t := time.UnixMilli(int64(v.Time))
+		timeString := t.Format("15:04:05")	
+		message = message + strconv.FormatInt(int64(v.BarcodeID), 10) + "\t  " + timeString+ "\n"
 	}
 	return message
 }
