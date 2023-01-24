@@ -17,7 +17,7 @@ class GetByDate extends React.Component {
     const path = `https://harkinpark.run?date=`;
     return (
       <div>
-        <label for="date">Select date:</label>
+        <label>Select date:</label>
         <input
           onChange={(e) => this.handleChange(e.target.value)}
           type="date"

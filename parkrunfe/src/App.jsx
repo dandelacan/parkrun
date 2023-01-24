@@ -21,7 +21,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const decodedResults = JSON.parse(localStorage.getItem("results"));
-    this.setState({ decodedResults });
+    if (decodedResults) this.setState({ decodedResults });
   }
 
   render() {

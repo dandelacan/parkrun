@@ -49,7 +49,7 @@ class Timer extends React.Component {
   handleStartClickAt = async () => {
     await this.setState({
       startTime: Date.now() - this.state.startAt,
-      timerStarted: true,
+      timerStarted: "true",
     });
     this.setLocalStorageTime(this.state.startTime);
     this.startTimer();
