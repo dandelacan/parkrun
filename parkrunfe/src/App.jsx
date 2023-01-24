@@ -1,6 +1,6 @@
 import "./App.css";
 
-import React, { useRef } from "react";
+import React from "react";
 import Html5QrcodePlugin from "./Html5QrcodePlugin.jsx";
 import ResultContainerPlugin from "./ResultContainerPlugin.jsx";
 import Timer from "./Timer";
@@ -49,21 +49,18 @@ class App extends React.Component {
 
   onNewScanResult(decodedText, decodedResult) {
     const childElement = this.childRef.current;
-    console.log("App [result]", decodedResult, childElement.state.timeElapsed);
+    const timeElapsed = childElement.state.timeElapsed;
 
-    // let decodedResults = this.state.decodedResults;
-    // decodedResults.push(decodedResult);
     this.setState((state, props) => {
       state.decodedResults.push({
         decodedResult: decodedResult,
-        time: childElement.state.timeElapsed,
+        time: timeElapsed,
       });
       return state;
     });
   }
 
   clearTimes() {
-    console.log("called clear times");
     this.setState({ decodedResults: [] });
   }
 }
