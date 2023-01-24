@@ -6,6 +6,7 @@ var TimeFormat = require("hh-mm-ss");
 
 function filterResults(results) {
   let filteredResults = [];
+
   for (var i = 0; i < results.length; ++i) {
     if (i === 0) {
       filteredResults.push(results[i]);

@@ -67,7 +67,7 @@ class App extends React.Component {
   clearTimes() {
     this.setState({ decodedResults: [] });
 
-    localStorage.setItem("results", []);
+    localStorage.removeItem("results");
   }
 }
 
