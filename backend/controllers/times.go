@@ -53,7 +53,7 @@ func (t *TimeRecords) ViewTimes(w http.ResponseWriter, r *http.Request) {
 func printTimes(times []models.TimeRecord) string {
 	message := ""
 
-	for _, v := range times {
+	for _, v := range times {	
 		message = message + strconv.FormatInt(int64(v.BarcodeID), 10) + "\t  " + strconv.FormatInt(int64(v.Time), 10) + "\n"
 	}
 	return message

@@ -10,16 +10,18 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      decodedResults: [
-        { decodedResult: { decodedText: "12634" }, time: 100000 },
-        { decodedResult: { decodedText: "56878" }, time: 300000 },
-      ],
+      decodedResults: [],
     };
     this.childRef = React.createRef();
 
     // This binding is necessary to make `this` work in the callback.
     this.onNewScanResult = this.onNewScanResult.bind(this);
     this.clearTimes = this.clearTimes.bind(this);
+  }
+
+  componentDidMount() {
+    const decodedResults = JSON.parse(localStorage.getItem("results"));
+    this.setState({ decodedResults });
   }
 
   render() {
@@ -47,21 +49,25 @@ class App extends React.Component {
     );
   }
 
-  onNewScanResult(decodedText, decodedResult) {
+  async onNewScanResult(decodedText, decodedResult) {
     const childElement = this.childRef.current;
     const timeElapsed = childElement.state.timeElapsed;
 
-    this.setState((state, props) => {
+    await this.setState((state, props) => {
       state.decodedResults.push({
         decodedResult: decodedResult,
         time: timeElapsed,
       });
       return state;
     });
+
+    localStorage.setItem("results", JSON.stringify(this.state.decodedResults));
   }
 
   clearTimes() {
     this.setState({ decodedResults: [] });
+
+    localStorage.setItem("results", []);
   }
 }
 
